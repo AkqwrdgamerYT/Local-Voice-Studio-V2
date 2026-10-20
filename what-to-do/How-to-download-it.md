@@ -29,7 +29,7 @@ These instructions cover CPU / AMD / Intel systems and do not require an NVIDIA 
 
 ## 1. Download Local Voice Studio
 
-1. On this GitHub repository page, click **Code**, then **Download ZIP**.
+1. On this GitHub repository page, click **Code_WIN**, then **Download ZIP**.
 2. Extract the ZIP file.
 3. Open the extracted folder. It should contain `voice_changer_v2.py`, `requirements.txt`, and `Start Local Voice Studio V2.bat`.
 
