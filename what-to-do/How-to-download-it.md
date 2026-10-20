@@ -33,7 +33,7 @@ These steps use the **CPU / AMD / Intel** setup and do not require an NVIDIA gra
 
 On this GitHub repository page:
 
-1. Click **Code_WIN**.
+1. Click **Code_WIN** (for win) or **Code_linux** (for linux).
 2. Choose **Download ZIP**.
 3. Extract the ZIP to a folder you can find again.
 4. Check that the extracted folder contains these files:
@@ -86,7 +86,7 @@ The launcher creates a `.venv` folder inside the repository, installs the Python
 
 RVC WebUI is a **separate project**. Download it from the [official RVC GitHub repository](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI):
 
-1. Click **Code_linux → Download ZIP** on the RVC page.
+1. Click **Code → Download ZIP** on the RVC page.
 2. Extract the ZIP.
 3. Open the project folder containing both `webui.py` and `requirments_cpu_py312.txt`.
 
