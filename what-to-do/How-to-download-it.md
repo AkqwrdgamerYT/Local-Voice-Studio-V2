@@ -40,11 +40,19 @@ On this GitHub repository page:
 
    ```text
    voice_changer_v2.py
-   voice_changer_linux.py
    requirements.txt
    Start Local Voice Studio V2.bat
-   Start Local Voice Studio Linux.sh
+  
    ```
+   for win
+
+   ```text
+    voice_changer_linux.py
+    Start Local Voice Studio Linux.sh
+    requirements.txt
+
+   ```
+   for linux
 
 Use the Windows launcher on Windows and the Linux launcher on Ubuntu.
 
