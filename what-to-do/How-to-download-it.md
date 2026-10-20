@@ -44,7 +44,7 @@ On this GitHub repository page:
    Start Local Voice Studio V2.bat
   
    ```
-   for win
+   For WIN
 
    ```text
     voice_changer_linux.py
@@ -52,7 +52,7 @@ On this GitHub repository page:
     requirements.txt
 
    ```
-   for linux
+   For LINUX
 
 Use the Windows launcher on Windows and the Linux launcher on Ubuntu.
 
