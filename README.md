@@ -9,3 +9,7 @@ LVSV2 does not train or change voices by itself. For live voice changing in apps
 ## Why is there no V1?
 
 The first version did not work reliably, so it was replaced with a rebuilt version: Local Voice Studio V2. V2 is the version this project focuses on.
+
+## How to update
+
+You go into the updates folder and copy and paste the new code. When I release a update I will notify you guys; When I update it I tell you witch one was updated.
