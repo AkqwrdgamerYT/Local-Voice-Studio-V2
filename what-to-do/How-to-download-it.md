@@ -1,87 +1,165 @@
-# Local Voice Studio & RVC WebUI
+# How to Download and Install Local Voice Studio
 
-**Download and setup guide for Windows and Linux**
+**Windows and Ubuntu 24.04 (64-bit) setup guide**
 
-This guide explains how to download and set up **Local Voice Studio** and **RVC WebUI**.
+This guide covers two separate programs:
 
-> **Important:** Local Voice Studio does not train or convert voices by itself. Use RVC WebUI to train a voice model, and a separate compatible live converter for live voice changing.
+1. **Local Voice Studio** — the desktop app for recording audio, organizing voice models, and opening other tools.
+2. **RVC WebUI** — a separate program that trains a voice model from recordings.
 
-## Before you start
+Local Voice Studio does **not** train or convert voices by itself. Live voice changing also needs a separate compatible voice converter.
 
-| Component | Windows | Linux |
+## Platform support
+
+| Program | Windows | Ubuntu 24.04 x86_64 |
 | --- | --- | --- |
-| Local Voice Studio app | Supported | Not currently supported |
-| RVC WebUI | Supported | Supported on Ubuntu 24.04 x86_64 |
+| Local Voice Studio | Supported | Supported by `voice_changer_linux.py` |
+| RVC WebUI | Supported | Supported using the RVC project's CPU instructions |
 
-The Windows `.bat` launcher only works on Windows. Local Voice Studio also uses Windows-specific features, so it is not currently supported on Linux. On Linux, you can use RVC WebUI directly.
-
-These instructions cover CPU / AMD / Intel systems and do not require an NVIDIA graphics card. RVC may run more slowly without a supported GPU.
+These steps use the **CPU / AMD / Intel** setup and do not require an NVIDIA graphics card. RVC may run slowly without supported GPU acceleration.
 
 ## Contents
 
-- [1. Download Local Voice Studio](#1-download-local-voice-studio)
+- [1. Download this repository](#1-download-this-repository)
 - [2. Install Local Voice Studio on Windows](#2-install-local-voice-studio-on-windows)
-- [3. Download and install RVC WebUI on Windows](#3-download-and-install-rvc-webui-on-windows)
-- [4. Install and run RVC WebUI on Linux](#4-install-and-run-rvc-webui-on-linux)
-- [5. Record clips and train a voice](#5-record-clips-and-train-a-voice)
+- [3. Install Local Voice Studio on Ubuntu](#3-install-local-voice-studio-on-ubuntu)
+- [4. Download and install RVC WebUI on Windows](#4-download-and-install-rvc-webui-on-windows)
+- [5. Download and install RVC WebUI on Ubuntu](#5-download-and-install-rvc-webui-on-ubuntu)
+- [6. Download RVC model-support files](#6-download-rvc-model-support-files)
+- [7. Start RVC WebUI](#7-start-rvc-webui)
 - [Troubleshooting](#troubleshooting)
-- [Privacy and permissions](#privacy-and-permissions)
 
-## 1. Download Local Voice Studio
+## 1. Download this repository
 
-1. On this GitHub repository page, click **Code_WIN**, then **Download ZIP**.
-2. Extract the ZIP file.
-3. Open the extracted folder. It should contain `voice_changer_v2.py`, `requirements.txt`, and `Start Local Voice Studio V2.bat`.
+On this GitHub repository page:
+
+1. Click **Code_WIN**.
+2. Choose **Download ZIP**.
+3. Extract the ZIP to a folder you can find again.
+4. Check that the extracted folder contains these files:
+
+   ```text
+   voice_changer_v2.py
+   voice_changer_linux.py
+   requirements.txt
+   Start Local Voice Studio V2.bat
+   Start Local Voice Studio Linux.sh
+   ```
+
+Use the Windows launcher on Windows and the Linux launcher on Ubuntu.
 
 ## 2. Install Local Voice Studio on Windows
 
-1. Install **Python 3.12 (64-bit)** from [python.org](https://www.python.org/downloads/windows/). During setup, enable **Add Python to PATH** if that option appears.
-2. Open the extracted Local Voice Studio folder.
-3. Double-click **Start Local Voice Studio V2.bat**. If it asks to install microphone packages, type `Y` and press Enter.
+1. Install **Python 3.12 (64-bit)** from [python.org](https://www.python.org/downloads/windows/).
+2. Open the extracted repository folder.
+3. Double-click **Start Local Voice Studio V2.bat**.
+4. If it asks to install microphone packages, type `Y` and press Enter.
 
-If the launcher does not work, open **PowerShell in the extracted folder** and run:
+If the launcher does not work, open PowerShell in the repository folder and run:
 
 ```powershell
 py -3.12 -m pip install -r .\requirements.txt
 py -3.12 .\voice_changer_v2.py
 ```
 
-The app needs NumPy and sounddevice for microphone recording and testing. The launcher checks for these packages and can install them.
+## 3. Install Local Voice Studio on Ubuntu
 
-## 3. Download and install RVC WebUI on Windows
+These instructions target **Ubuntu 24.04 x86_64**.
 
-RVC WebUI is a separate project. Download its ZIP from the [official RVC repository](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI), extract it, and open the **inner project folder** containing both `webui.py` and `requirments_cpu_py312.txt`.
+1. Install Python 3.12, Tkinter, and the audio library needed by the microphone:
 
-Install Python 3.12 (64-bit) if you have not already. Open PowerShell in that project folder, then run:
+   ```bash
+   sudo apt update
+   sudo apt install -y python3.12 python3.12-venv python3-tk libportaudio2
+   ```
+
+2. Open Terminal in the extracted repository folder.
+3. Start the app:
+
+   ```bash
+   bash "Start Local Voice Studio Linux.sh"
+   ```
+
+The launcher creates a `.venv` folder inside the repository, installs the Python packages listed in `requirements.txt` if needed, and starts `voice_changer_linux.py`. Keep the terminal open while using the app.
+
+## 4. Download and install RVC WebUI on Windows
+
+RVC WebUI is a **separate project**. Download it from the [official RVC GitHub repository](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI):
+
+1. Click **Code → Download ZIP** on the RVC page.
+2. Extract the ZIP.
+3. Open the project folder containing both `webui.py` and `requirments_cpu_py312.txt`.
+
+The RVC project spells “requirements” as `requirments` in that filename.
+
+Open PowerShell in the folder containing those files, then create an isolated Python environment:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip setuptools wheel
 ```
 
-For CPU, AMD, or Intel hardware, install the CPU version of PyTorch and then RVC's CPU dependencies:
+Install the CPU build of PyTorch and the RVC CPU dependencies:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install torch==2.4.1+cpu torchaudio==2.4.1+cpu torchvision==0.19.1+cpu --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 .\.venv\Scripts\python.exe -m pip install --timeout 120 --retries 5 -r .\requirments_cpu_py312.txt
 ```
 
-The filename is spelled `requirments_cpu_py312.txt` in the RVC project.
+### If package downloads time out on Windows
 
-### If package downloads time out
-
-The RVC requirements file may point to package mirrors that are slow or unavailable on some networks. Open `requirments_cpu_py312.txt` in a text editor and replace its package index lines at the top with:
+The RVC requirements file may list package mirrors that are slow or inaccessible on your network. Open `requirments_cpu_py312.txt` in Notepad and replace the existing `--index-url` and `--extra-index-url` lines near the top with:
 
 ```text
 --index-url https://pypi.org/simple
 --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 
-Save the file and retry the requirements install command. If your network blocks package downloads, ask its administrator or try later on a network you are allowed to use. Do not bypass network restrictions.
+Save the file and rerun the second install command. Package downloads can be large. If the network blocks them, ask its administrator or use another network where the downloads are allowed.
 
-### Download RVC's required model-support files
+## 5. Download and install RVC WebUI on Ubuntu
 
-Run these commands from the RVC project folder in PowerShell:
+These commands follow the RVC project's CPU setup for **Ubuntu 24.04 x86_64**. Open Terminal:
+
+1. Install system packages:
+
+   ```bash
+   sudo apt update
+   sudo apt install -y git python3.12 python3.12-venv python3.12-dev ffmpeg unzip libsndfile1 libportaudio2
+   ```
+
+2. Download RVC and enter its project folder:
+
+   ```bash
+   git clone https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI.git
+   cd Retrieval-based-Voice-Conversion-WebUI
+   ```
+
+3. Create the Python environment and install RVC:
+
+   ```bash
+   python3.12 -m venv .venv
+   source .venv/bin/activate
+   python -m pip install --upgrade pip setuptools wheel
+   python -m pip install --timeout 120 --retries 5 -r requirments_cpu_py312.txt
+   ```
+
+### If package downloads time out on Ubuntu
+
+Edit `requirments_cpu_py312.txt` and replace its existing package index lines near the top with:
+
+```text
+--index-url https://pypi.org/simple
+--extra-index-url https://download.pytorch.org/whl/cpu
+```
+
+Save the file, then rerun the `python -m pip install ...` command above.
+
+## 6. Download RVC model-support files
+
+RVC needs additional model-support files beyond its source code and Python packages. Download these from inside the RVC project folder.
+
+### Windows PowerShell
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install --upgrade huggingface_hub
@@ -90,66 +168,20 @@ Run these commands from the RVC project folder in PowerShell:
 .\.venv\Scripts\hf.exe download lj1995/VoiceConversionWebUI --revision main --include "pretrained/*" "pretrained_v2/*" --local-dir assets
 .\.venv\Scripts\hf.exe download lj1995/VoiceConversionWebUI mute.zip --revision main --local-dir .model-downloads
 .\.venv\Scripts\python.exe -m zipfile -e .model-downloads\mute.zip logs
-```
-
-Windows CPU / AMD / Intel setups also need the DirectML RMVPE file:
-
-```powershell
 .\.venv\Scripts\hf.exe download lj1995/VoiceConversionWebUI rmvpe.onnx --revision main --local-dir assets/rmvpe
 ```
 
-RVC also needs FFmpeg on Windows. Download [ffmpeg.exe](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/ffmpeg.exe?download=true) and [ffprobe.exe](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/ffprobe.exe?download=true), then put both files in the RVC project folder.
+For RVC on Windows, also download [ffmpeg.exe](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/ffmpeg.exe?download=true) and [ffprobe.exe](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/ffprobe.exe?download=true). Put both files in the RVC project folder.
 
-### Start RVC WebUI on Windows
+### Ubuntu Terminal
 
-Before launching, check that RVC's `webui.py` binds to your computer only:
-
-```python
-server_name="127.0.0.1"
-```
-
-It should **not** be set to `server_name="0.0.0.0"`. The local setting prevents other devices on the network from accessing the RVC page.
-
-Start RVC from its project folder:
-
-```powershell
-.\.venv\Scripts\python.exe .\webui.py
-```
-
-Keep the terminal window open. Open **http://127.0.0.1:7865** in your browser after the server finishes starting.
-
-## 4. Install and run RVC WebUI on Linux
-
-The RVC project's instructions target **Ubuntu 24.04, 64-bit**. These commands install RVC's CPU version for a CPU / AMD / Intel system.
-
-Open Terminal and install the system packages:
+First activate the RVC virtual environment if it is not already active:
 
 ```bash
-sudo apt update
-sudo apt install -y git python3.12 python3.12-venv python3.12-dev ffmpeg unzip libsndfile1 libportaudio2
-```
-
-Download the RVC project and install its CPU dependencies:
-
-```bash
-git clone https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI.git
-cd Retrieval-based-Voice-Conversion-WebUI
-python3.12 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip setuptools wheel
-python -m pip install --timeout 120 --retries 5 -r requirments_cpu_py312.txt
 ```
 
-If the package mirrors time out, edit `requirments_cpu_py312.txt` and replace its index lines at the top with:
-
-```text
---index-url https://pypi.org/simple
---extra-index-url https://download.pytorch.org/whl/cpu
-```
-
-Then rerun the `pip install -r` command.
-
-Download the model-support files:
+Then download the model-support files:
 
 ```bash
 python -m pip install --upgrade huggingface_hub
@@ -160,35 +192,56 @@ hf download lj1995/VoiceConversionWebUI mute.zip --revision main --local-dir .mo
 python -m zipfile -e .model-downloads/mute.zip logs
 ```
 
-Check that `webui.py` uses `server_name="127.0.0.1"` rather than `server_name="0.0.0.0"`, then start RVC:
+Ubuntu's system packages provide FFmpeg. The `.onnx` DirectML file is for Windows and is not part of these Ubuntu steps.
+
+## 7. Start RVC WebUI
+
+Before starting RVC, check that its `webui.py` is configured to listen only on your own computer:
+
+```python
+server_name="127.0.0.1"
+```
+
+Do **not** expose the web UI with `server_name="0.0.0.0"`.
+
+### Start on Windows
+
+From the RVC project folder, run:
+
+```powershell
+.\.venv\Scripts\python.exe .\webui.py
+```
+
+### Start on Ubuntu
+
+From the RVC project folder, activate its environment if needed, then run:
 
 ```bash
+source .venv/bin/activate
 python webui.py
 ```
 
-Keep the terminal open and visit **http://127.0.0.1:7865** in your browser. The Local Voice Studio desktop app is not currently supported on Linux; use RVC directly there.
+Keep the terminal open. When RVC has finished starting, open **http://127.0.0.1:7865** in your browser.
 
-## 5. Record clips and train a voice
+## Connect RVC to Local Voice Studio
 
-1. In Local Voice Studio on Windows, open **Record & import**.
-2. Enter a dataset name, select your microphone, then press and hold **Hold to test** while speaking. Release to finish the test.
-3. Click **Start recording**, speak clearly in a quiet room, then click **Stop & save**. You can also import supported audio clips. Use multiple varied recordings; one short sentence is not enough to train a useful model.
-4. Recordings are saved under `Documents\LocalVoiceStudio\datasets\<dataset name>`.
-5. In RVC WebUI, select that dataset and follow its training steps. The exact controls can vary between RVC versions.
-6. Export the trained voice model from RVC. In Local Voice Studio, open **My voices**, click **Import model...**, and select the exported `.pth` or `.onnx` file. If you have the matching RVC `.index`, select it when prompted.
+In Local Voice Studio's **Train a voice** tab, set:
 
-> **Live conversion:** Local Voice Studio does not convert voices or automatically load a model into a live converter. Install a compatible converter separately, set its executable on the **Live changer** tab, launch it, then select the model and audio devices in the converter.
+- **RVC project folder:** the RVC folder containing `webui.py`.
+- **Python executable (Windows):** `<RVC folder>\.venv\Scripts\python.exe`
+- **Python executable (Ubuntu):** `<RVC folder>/.venv/bin/python`
+- **Local RVC page:** `http://127.0.0.1:7865`
+
+Confirm the local-only checkbox before asking Local Voice Studio to launch RVC. The Linux launcher starts the RVC process in the terminal running the app; keep that terminal open.
 
 ## Troubleshooting
 
-- **The browser says the site cannot be reached:** keep the RVC terminal open, wait for startup to finish, then refresh `http://127.0.0.1:7865`.
-- **The app says RVC is not local-only:** change `server_name="0.0.0.0"` to `server_name="127.0.0.1"` in `webui.py`, save, and relaunch RVC.
-- **No microphone appears:** check Windows microphone permissions and input settings, then click **Refresh** in the app.
-- **Pip reports a timeout:** use the official package index lines above, allow the install to finish, and use only a network where these downloads are permitted.
-- **A recording is not a model:** recordings are training data. Train them in RVC and export a model before importing it into **My voices**.
+- **The launcher says Python is missing:** install Python 3.12 and confirm that the required command is available (`py -3.12` on Windows or `python3.12` on Ubuntu).
+- **Ubuntu says Tkinter is missing:** run `sudo apt install python3-tk`.
+- **The microphone packages fail to install:** check that package downloads are allowed, then retry the launcher or install command.
+- **RVC says the requirements file is missing:** make sure the terminal is in the project folder containing `webui.py`; the ZIP may contain an outer folder and a nested project folder.
+- **Pip reports a timeout:** use the official package-index lines above, allow large downloads time to complete, and do not bypass network restrictions.
+- **The RVC browser page cannot be reached:** leave the RVC terminal open, wait for startup to finish, then refresh `http://127.0.0.1:7865`.
+- **The app says RVC is not local-only:** check `server_name` in `webui.py`. Use `127.0.0.1`, not `0.0.0.0`.
 
-## Privacy and permissions
-
-Record and train only on your own voice or a voice you have permission to use. Keep recordings and model files private. Anyone with access to a working voice model may be able to copy or misuse it; no app can guarantee that a model cannot be extracted.
-
-For the latest RVC requirements, consult the [official RVC repository](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI).
+For current RVC instructions and updates, see the [official RVC repository](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI).
